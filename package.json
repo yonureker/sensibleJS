@@ -18,6 +18,10 @@
   },
   "homepage": "https://github.com/yonureker/sensibleJS#readme",
   "dependencies": {
+    "@babel/core": "^7.5.5",
+    "@babel/preset-env": "^7.5.5",
+    "@babel/preset-react": "^7.0.0",
+    "babel-loader": "^8.0.6",
     "canvas": "^2.5.0"
   }
 }
