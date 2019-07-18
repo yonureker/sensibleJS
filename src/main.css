@@ -1,0 +1,20 @@
+html {
+  width:1344px;
+  height:1697px;
+}
+  
+body {
+  position:absolute;
+  padding:0;
+  margin:0;
+  width:100%;
+  /* max-width: 1345px; */
+  height:100%;
+  /* overflow:hidden; */
+  margin: 0 auto;
+}
+
+#myCanvas {
+  background: url('./assets/pitch/grass.jpg');
+  margin: 0 auto;
+}
