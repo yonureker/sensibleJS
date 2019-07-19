@@ -10,11 +10,12 @@ body {
   width:100%;
   /* max-width: 1345px; */
   height:100%;
-  /* overflow:hidden; */
+  overflow:hidden;
   margin: 0 auto;
 }
 
-#myCanvas {
-  background: url('./assets/pitch/grass.jpg');
+canvas {
+  background: url('./assets/pitch/pitch_merged.png'), url('./assets/pitch/grass.jpg');
+  background-repeat: repeat-x, repeat;
   margin: 0 auto;
 }

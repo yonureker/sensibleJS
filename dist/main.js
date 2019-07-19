@@ -97,28 +97,14 @@ document.addEventListener("DOMContentLoaded", function () {
   window.onload = function () {
     var canvas = document.getElementById("myCanvas");
     var ctx = canvas.getContext("2d");
-    var pitchZero = new Image();
-    pitchZero.src = './assets/pitch/pitch_0.png';
-    ctx.drawImage(pitchZero, 0, 0);
-    var pitchOne = new Image();
-    pitchOne.src = './assets/pitch/pitch_1.png';
-    ctx.drawImage(pitchOne, 336, 0);
-    var pitchTwo = new Image();
-    pitchTwo.src = './assets/pitch/pitch_2.png';
-    ctx.drawImage(pitchTwo, 672, 0);
-    var pitchThree = new Image();
-    pitchThree.src = './assets/pitch/pitch_3.png';
-    ctx.drawImage(pitchThree, 1008, 0);
     var playerOneImage = new Image();
     playerOneImage.src = './assets/players/player1.png';
     ctx.drawImage(playerOneImage, 500, 500);
+    var playerTwoImage = new Image();
+    playerTwoImage.src = './assets/players/player1.png';
+    ctx.drawImage(playerOneImage, 600, 800);
   };
 
-  var player1 = {
-    speed: 500,
-    x: 500,
-    y: 500
-  };
   window.onload();
 });
 
