@@ -13,10 +13,10 @@
 <body onload="startGame()">
   <script>
 
-  window.requestAnimationFrame = window.requestAnimationFrame
-    || window.mozRequestAnimationFrame
-    || window.webkitRequestAnimationFrame
-    || window.msRequestAnimationFrame 
+  // window.requestAnimationFrame = window.requestAnimationFrame
+  //   || window.mozRequestAnimationFrame
+  //   || window.webkitRequestAnimationFrame
+  //   || window.msRequestAnimationFrame 
 
     let player1;
     let player2;
@@ -112,8 +112,8 @@
 
     function ballMovement() {
       if (keys[32] && keys[38] && keys[39]) {
-        ball.speedY -= 2;
-        ball.speedX += 2;
+        ball.speedY -= 1;
+        ball.speedX += 1;
       }
     }
 
@@ -135,8 +135,8 @@
 
     function updateGameArea() {
         myGameArea.clear();
-        ball.speedX *= 0.89
-        ball.speedY *= 0.89
+        ball.speedX *= 0.96
+        ball.speedY *= 0.96
 
         player1.speedX = 0;
         player1.speedY = 0;
