@@ -25,10 +25,9 @@
 
     function startGame() {
       myGameArea.start();
-      player1 = new component(24, 34, "./assets/players/player1.png", 630, 600, "image");
-      player2 = new component(24, 34, "./assets/players/player2.png", 840, 840, "image");
-      ball = new component(8, 8, "./assets/ball/ball.png", 630, 580, "image");
-      window.requestAnimationFrame(updateGameArea);
+      player1 = new component(24, 34, "./assets/players/player1.png", 430, 580, "image");
+      player2 = new component(24, 34, "./assets/players/player2.png", 540, 440, "image");
+      ball = new component(8, 8, "./assets/ball/ball.png", 430, 570, "image");
     };
 
     let myGameArea = {
@@ -38,7 +37,7 @@
         this.canvas.height = 1697;
         this.context = this.canvas.getContext("2d");
         document.body.insertBefore(this.canvas, document.body.childNodes[0]);
-        this.interval = setInterval(updateGameArea, 10);
+        this.interval = setInterval(updateGameArea, 16.66);
         window.addEventListener("keydown", function (e) {
             keys[e.keyCode] = true;
         });
@@ -75,7 +74,6 @@
           ctx.fillRect(this.x, this.y, this.width, this.height);
         }
       };
-      // requestAnimationFrame(this.update);
       this.newPos = function () {
         this.x += this.speedX;
         this.y += this.speedY;
@@ -84,17 +82,17 @@
 
     function handlePlayer1() {
       if (keys[38]) {
-          player1.speedY -= 1;
-        }
-        if (keys[40]) {
-          player1.speedY += 1;
-        }
-        if (keys[39]) {
-          player1.speedX += 1;
-        }
-        if (keys[37]) {
-          player1.speedX -= 1;
-        }
+        player1.speedY -= 1;
+      }
+      if (keys[40]) {
+        player1.speedY += 1;
+      }
+      if (keys[39]) {
+        player1.speedX += 1;
+      }
+      if (keys[37]) {
+        player1.speedX -= 1;
+      }
     }
 
     function handlePlayer2() {
@@ -113,40 +111,38 @@
     }
 
     function ballMovement() {
-      if (keys[32]) {
-        ball.speedY -= player1.speedY + 39
+      if (keys[32] && keys[38] && keys[39]) {
+        ball.speedY -= 2;
+        ball.speedX += 2;
       }
     }
 
     function grabBall() {
-      if (Math.abs(player1.x - ball.x) < 20 && Math.abs(player1.y - ball.y) < 20){
-        ball.x = player1.x - 3;
-        ball.y = player1.y + 18;
+      if (Math.abs(player1.x - ball.x) < 8 && Math.abs(player1.y - ball.y) < 8){
+        ball.x = player1.x;
+        ball.y = player1.y;
       }
 
-      if (Math.abs(player2.x - ball.x) < 20 && Math.abs(player2.y - ball.y) < 20){
-        ball.x = player2.x - 3;
-        ball.y = player2.y + 18;
+      if (Math.abs(player2.x - ball.x) < 8 && Math.abs(player2.y - ball.y) < 8){
+        ball.x = player2.x;
+        ball.y = player2.y;
       }
     }
 
-    player1.update();
-    player2.update();
-    ball.update();
-
-
+    // player1.update();
+    // player2.update();
+    // ball.update();
 
     function updateGameArea() {
         myGameArea.clear();
-        ball.speedX = 0
-        ball.speedY = 0
+        ball.speedX *= 0.89
+        ball.speedY *= 0.89
 
         player1.speedX = 0;
         player1.speedY = 0;
 
         player2.speedX = 0;
         player2.speedY = 0;
-
 
         // handling multiple keyboard inputs for Player 1
         handlePlayer1();

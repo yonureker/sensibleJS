@@ -1,4 +1,6 @@
-export default class Player{
+const Player = require('./player');
+
+export default class Ball{
   constructor(width, height, src, x, y) {
     this.width = width;
     this.height = height;
@@ -18,17 +20,9 @@ export default class Player{
     this.y += this.speedY;
   }
 
-  stealBall(){
-    
-  }
-
-  shoot(){
+  move(){
 
   }
 
-  pass(){
-
-  }
-
-
+  
 }
