@@ -13,15 +13,13 @@
 <body onload="startGame()">
   <script>
 
-  // window.requestAnimationFrame = window.requestAnimationFrame
-  //   || window.mozRequestAnimationFrame
-  //   || window.webkitRequestAnimationFrame
-  //   || window.msRequestAnimationFrame 
+    window.requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame || window.webkitRequestAnimationFrame || window.msRequestAnimationFrame;
 
     let player1;
     let player2;
     let ball;
     let keys = [];
+    requestAnimationFrame(startGame);
 
     function startGame() {
       myGameArea.start();
@@ -37,7 +35,7 @@
         this.canvas.height = 1697;
         this.context = this.canvas.getContext("2d");
         document.body.insertBefore(this.canvas, document.body.childNodes[0]);
-        this.interval = setInterval(updateGameArea, 16.66);
+        this.interval = setInterval(updateGameArea, 50);
         window.addEventListener("keydown", function (e) {
             keys[e.keyCode] = true;
         });
@@ -62,13 +60,14 @@
       this.speedY = 0;
       this.x = x;
       this.y = y;
+      this.score = 0;
       this.update = function () {
         ctx = myGameArea.context;
         if (type == "image") {
           ctx.drawImage(this.image,
             this.x,
             this.y,
-            this.width, this.height);
+            this.width, this.height); 
         } else {
           ctx.fillStyle = color;
           ctx.fillRect(this.x, this.y, this.width, this.height);
@@ -111,9 +110,19 @@
     }
 
     function ballMovement() {
-      if (keys[32] && keys[38] && keys[39]) {
-        ball.speedY -= 1;
-        ball.speedX += 1;
+      if ((keys[32]) && (ball.x === player1.x)) {
+        if (keys[38]) {
+          ball.speedY -= 1.2;
+        }
+        if (keys[40]) {
+          ball.speedY += 1.2;
+        }
+        if (keys[39]) {
+          ball.speedX += 1.2;
+        }
+        if (keys[37]) {
+          ball.speedX -= 1.2;
+        }
       }
     }
 
@@ -135,14 +144,17 @@
 
     function updateGameArea() {
         myGameArea.clear();
-        ball.speedX *= 0.96
-        ball.speedY *= 0.96
+        //deceleration of the ball after pass or shoot
+        ball.speedX *= 0.97;
+        ball.speedY *= 0.97;
 
-        player1.speedX = 0;
-        player1.speedY = 0;
 
-        player2.speedX = 0;
-        player2.speedY = 0;
+        //deceleration of the players of they stop running
+        player1.speedX *= 0.77;
+        player1.speedY *= 0.77;
+
+        player2.speedX *= 0.77;
+        player2.speedY *= 0.77;
 
         // handling multiple keyboard inputs for Player 1
         handlePlayer1();
@@ -156,20 +168,19 @@
         //track ball movement
         ballMovement();
         
-
+        // set the new position of player and redraw the image
         player1.newPos();
         player1.update();
 
         player2.newPos();
         player2.update();
 
+        //set new position of the ball and redraw the image
         ball.newPos();
         ball.update();
       // test movement of the GamePiece
       // myGamePiece.x += 0.1;
       // myGamePiece.y += 0.1;
-
-        // requestAnimationFrame(updateGameArea);
     };
   </script>
 </body>
