@@ -11,6 +11,7 @@
   <title>SensibleJS</title>
 </head>
 <body onload="startGame()">
+  <div>
   <script>
 
     window.requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame || window.webkitRequestAnimationFrame || window.msRequestAnimationFrame;
@@ -18,14 +19,17 @@
     let player1;
     let player2;
     let ball;
+    let goalkeeper;
     let keys = [];
-    requestAnimationFrame(startGame);
+    // requestAnimationFrame(startGame);
+    
 
     function startGame() {
       myGameArea.start();
-      player1 = new component(24, 34, "./assets/players/player1.png", 430, 580, "image");
-      player2 = new component(24, 34, "./assets/players/player2.png", 540, 440, "image");
-      ball = new component(8, 8, "./assets/ball/ball.png", 430, 570, "image");
+      player1 = new component(24, 34, "./assets/players/player1.png", 600, 580, "image");
+      player2 = new component(24, 34, "./assets/players/player2.png", 1173, 440, "image");
+      ball = new component(8, 8, "./assets/ball/ball.png", 602, 229, "image");
+      goalkeeper = new component(24, 34, "./assets/players/player2.png", 900, 340, "image");
     };
 
     let myGameArea = {
@@ -35,7 +39,7 @@
         this.canvas.height = 1697;
         this.context = this.canvas.getContext("2d");
         document.body.insertBefore(this.canvas, document.body.childNodes[0]);
-        this.interval = setInterval(updateGameArea, 50);
+        this.interval = setInterval(updateGameArea, 16);
         window.addEventListener("keydown", function (e) {
             keys[e.keyCode] = true;
         });
@@ -112,18 +116,31 @@
     function ballMovement() {
       if ((keys[32]) && (ball.x === player1.x)) {
         if (keys[38]) {
-          ball.speedY -= 1.2;
+          ball.speedY -= 1.75;
         }
         if (keys[40]) {
-          ball.speedY += 1.2;
+          ball.speedY += 1.75;
         }
         if (keys[39]) {
-          ball.speedX += 1.2;
+          ball.speedX += 1.75;
         }
         if (keys[37]) {
-          ball.speedX -= 1.2;
+          ball.speedX -= 1.75;
         }
       }
+    }
+
+    function goalkeeperMovement() {
+      if (ball.x < 597) {
+        goalkeeper.x = 597;
+      } else if (ball.x > 732) {
+        goalkeeper.x = 732;
+      } else if (ball.y < 230) {
+        goalkeeper.y = goalkeeper.y;
+      } else {
+        goalkeeper.x = ball.x;
+      }
+      goalkeeper.y = 220 + ((ball.y - 220) / 2);
     }
 
     function grabBall() {
@@ -136,6 +153,24 @@
         ball.x = player2.x;
         ball.y = player2.y;
       }
+
+      if (Math.abs(goalkeeper.x - ball.x) < 8 && Math.abs(goalkeeper.y - ball.y) < 8){
+        ball.x = goalkeeper.x;
+        ball.y = goalkeeper.y;
+        ball.speedY += 2.75;
+      }
+    }
+
+    function decelerateBall(){
+      // if the ball is in the net
+      if (ball.x > 600 && ball.x < 737 && ball.y <= 203){
+        // ball.speedX += 10;
+        ball.speedY = -ball.speedY / 3.0;
+        ball.speedX = ball.speedX / 3.0;
+      } else {
+      ball.speedX *= 0.96;
+      ball.speedY *= 0.96;
+      }
     }
 
     // player1.update();
@@ -145,8 +180,7 @@
     function updateGameArea() {
         myGameArea.clear();
         //deceleration of the ball after pass or shoot
-        ball.speedX *= 0.97;
-        ball.speedY *= 0.97;
+        decelerateBall()
 
 
         //deceleration of the players of they stop running
@@ -167,6 +201,7 @@
 
         //track ball movement
         ballMovement();
+        goalkeeperMovement();
         
         // set the new position of player and redraw the image
         player1.newPos();
@@ -175,13 +210,25 @@
         player2.newPos();
         player2.update();
 
-        //set new position of the ball and redraw the image
         ball.newPos();
         ball.update();
+
+
+
+        goalkeeper.newPos();
+        goalkeeper.update();
+
+        //set new position of the ball and redraw the image
+        
       // test movement of the GamePiece
       // myGamePiece.x += 0.1;
       // myGamePiece.y += 0.1;
     };
   </script>
+  </div>
+
+  <div>
+
+  </div>
 </body>
 </html>
