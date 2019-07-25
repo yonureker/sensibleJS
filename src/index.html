@@ -28,8 +28,8 @@
       myGameArea.start();
       player1 = new component(24, 34, "./assets/players/player1.png", 600, 580, "image");
       player2 = new component(24, 34, "./assets/players/player2.png", 1173, 440, "image");
-      ball = new component(8, 8, "./assets/ball/ball.png", 602, 229, "image");
-      goalkeeper = new component(24, 34, "./assets/players/player2.png", 900, 340, "image");
+      ball = new component(8, 8, "./assets/ball/ball.png", 602, 529, "image");
+      goalkeeper = new component(24, 34, "./assets/players/player2.png", 450, 340, "image");
     };
 
     let myGameArea = {
@@ -67,15 +67,10 @@
       this.score = 0;
       this.update = function () {
         ctx = myGameArea.context;
-        if (type == "image") {
-          ctx.drawImage(this.image,
-            this.x,
-            this.y,
-            this.width, this.height); 
-        } else {
-          ctx.fillStyle = color;
-          ctx.fillRect(this.x, this.y, this.width, this.height);
-        }
+        ctx.drawImage(this.image,
+          this.x,
+          this.y,
+          this.width, this.height); 
       };
       this.newPos = function () {
         this.x += this.speedX;
@@ -129,6 +124,7 @@
         }
       }
     }
+    //410
 
     function goalkeeperMovement() {
       if (ball.x < 597) {
@@ -140,6 +136,7 @@
       } else {
         goalkeeper.x = ball.x;
       }
+      //rewrite
       goalkeeper.y = 220 + ((ball.y - 220) / 2);
     }
 
@@ -168,8 +165,8 @@
         ball.speedY = -ball.speedY / 3.0;
         ball.speedX = ball.speedX / 3.0;
       } else {
-      ball.speedX *= 0.96;
-      ball.speedY *= 0.96;
+      ball.speedX *= 0.97;
+      ball.speedY *= 0.97;
       }
     }
 
@@ -217,18 +214,12 @@
 
         goalkeeper.newPos();
         goalkeeper.update();
-
-        //set new position of the ball and redraw the image
-        
-      // test movement of the GamePiece
-      // myGamePiece.x += 0.1;
-      // myGamePiece.y += 0.1;
     };
   </script>
   </div>
 
   <div>
-
+   test
   </div>
 </body>
 </html>
